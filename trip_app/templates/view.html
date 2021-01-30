@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Itinerary</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="header">
+        <a href="/travels">Back</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <div>
+        <h1>{{trip.destination}}</h1> 
+        <p>Planned By: {{trip.planned_by.first_name}} {{trip.planned_by.last_name}}</p>
+        <p>Description: {{trip.description}}</p>
+        <p>Travel Date From: {{trip.start_date}}</p>
+        <p>Travel Date To: {{trip.end_date}}</p>
+    </div>
+    <div>
+        <h3>Other Users Joining the Trip:</h3>
+        <ul>
+            {% for user in trip.user_join.all %}
+            {% if trip.planned_by.id != request.session.user_id %}
+            <li>{{user.first_name}} {{user.last_name}}</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</body>
